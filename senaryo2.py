@@ -36,6 +36,17 @@ except FileNotFoundError:
 print("Veri başarıyla yüklendi.")
 df_processed = df.copy()
 
+# Açısal veri dönüşümü: sin/cos bileşenleri
+if '10-min mean wind direction' in df_processed.columns:
+    radians = np.radians(pd.to_numeric(df_processed['10-min mean wind direction'], errors='coerce'))
+    df_processed['wind_dir_sin'] = np.sin(radians)
+    df_processed['wind_dir_cos'] = np.cos(radians)
+    print("wind_dir_sin ve wind_dir_cos sütunları eklendi.")
+
+if 'wind_dir_sin' in df_processed.columns and 'Sea level pressure' in df_processed.columns:
+    df_processed['wind_pressure_interaction'] = df_processed['wind_dir_sin'] * df_processed['Sea level pressure']
+    print("wind_pressure_interaction sütunu eklendi.")
+
 # Hedeflenecek ve özellik olarak kullanılabilecek sütunlar
 targets_to_predict = ['10-min mean wind speed', 'Humidity', 'Temperature', '10-min mean wind direction']
 other_potential_features = [
@@ -44,7 +55,8 @@ other_potential_features = [
     '24-hour pressure variation', 'Precipitation in the last 24 hours'
     # 'Gust over last 10 minutes' # Bu sütun da parse_month_string_value gerektirebilir, eklenirse month_string_columns'a da eklenmeli
 ]
-all_relevant_columns = sorted(list(set(targets_to_predict + other_potential_features)))
+engineered_features = ['wind_dir_sin', 'wind_dir_cos', 'wind_pressure_interaction']
+all_relevant_columns = sorted(list(set(targets_to_predict + other_potential_features + engineered_features)))
 
 # "X.AyAdı" formatında parse edilecek sütunlar
 month_string_columns = ['10-min mean wind speed'] # Bu artık yanıltıcı olabilir, belki mixed_format_wind_columns gibi bir isim?

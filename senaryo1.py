@@ -45,8 +45,20 @@ other_potential_features = [
     'Horizontal visibility', 'Total cloud cover', 'Station pressure',
     '24-hour pressure variation', 'Precipitation in the last 24 hours'
 ]
-all_relevant_columns = sorted(list(set(targets_to_predict + other_potential_features)))
+engineered_features = ['wind_dir_sin', 'wind_dir_cos', 'wind_pressure_interaction']
+all_relevant_columns = sorted(list(set(targets_to_predict + other_potential_features + engineered_features)))
 month_string_columns = ['10-min mean wind speed'] # Bu artık yanıltıcı olabilir, belki mixed_format_wind_columns gibi bir isim?
+
+# Açısal veriyi dönüştür (0-360 derece → sin/cos)
+if '10-min mean wind direction' in df_processed.columns:
+    radians = np.radians(df_processed['10-min mean wind direction'])
+    df_processed['wind_dir_sin'] = np.sin(radians)
+    df_processed['wind_dir_cos'] = np.cos(radians)
+    print("wind_dir_sin ve wind_dir_cos sütunları eklendi.")
+
+if 'wind_dir_sin' in df_processed.columns and 'Sea level pressure' in df_processed.columns:
+    df_processed['wind_pressure_interaction'] = df_processed['wind_dir_sin'] * df_processed['Sea level pressure']
+    print("wind_pressure_interaction sütunu eklendi.")
 
 # Sütunları işle (tip dönüşümü)
 for col in df_processed.columns: # Veya sadece all_relevant_columns içinde dönebilirsiniz

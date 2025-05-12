@@ -469,3 +469,38 @@ Senaryo 1 tamamlandı.
     XGBoost: MAE=0.0023, MSE=0.0000, RMSE=0.0026, R2=1.0000, MAPE=0.00%
 
 Senaryo 2 tamamlandı.
+
+Hala kötü sonuç var rüzgar hızı için, bunun için iyileştirmeler denenecek.
+
+#### İYİLEŞTİRMELER DENENDİ
+
+--- SENARYO 1 BAŞLIYOR (Belirtilen hedefler için XGBoost) ---
+Toplam 2 istasyon bulundu.
+
+--- İstasyon ID: 7761 ---
+  --- Hedef Değişken: 10-min mean wind speed ---
+      Bilgi: MAPE sıfır olmayan değerler için hesaplandı.
+    XGBoost: MAE=0.8595, MSE=1.5291, RMSE=1.2366, R2=0.4220, MAPE=35.88%
+  --- Hedef Değişken: Humidity ---
+    XGBoost: MAE=1.3591, MSE=3.3648, RMSE=1.8344, R2=0.9826, MAPE=1.93%
+  --- Hedef Değişken: Temperature ---
+    XGBoost: MAE=0.1910, MSE=0.0732, RMSE=0.2706, R2=0.9984, MAPE=0.07%
+  --- Hedef Değişken: 10-min mean wind direction ---
+      Bilgi: MAPE sıfır olmayan değerler için hesaplandı.
+    XGBoost: MAE=0.1492, MSE=0.2894, RMSE=0.5379, R2=1.0000, MAPE=0.10%
+
+--- İstasyon ID: 7790 ---
+  --- Hedef Değişken: 10-min mean wind speed ---
+      Bilgi: MAPE sıfır olmayan değerler için hesaplandı.
+    XGBoost: MAE=0.9253, MSE=1.8483, RMSE=1.3595, R2=0.4406, MAPE=42.63%
+  --- Hedef Değişken: Humidity ---
+    XGBoost: MAE=1.5594, MSE=4.0617, RMSE=2.0154, R2=0.9844, MAPE=2.25%
+  --- Hedef Değişken: Temperature ---
+    XGBoost: MAE=0.2218, MSE=0.1065, RMSE=0.3264, R2=0.9977, MAPE=0.08%
+  --- Hedef Değişken: 10-min mean wind direction ---
+      Bilgi: MAPE sıfır olmayan değerler için hesaplandı.
+    XGBoost: MAE=0.2111, MSE=0.2053, RMSE=0.4531, R2=1.0000, MAPE=0.13%
+
+Senaryo 1 tamamlandı.
+
+Neredeyse hiçbir değişim yok, değişikliklerden vazgeçildi.

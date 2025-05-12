@@ -192,6 +192,87 @@ Station pressure                     2.472655e-02
 24-hour pressure variation           1.509705e+19
 Precipitation in the last 24 hours   2.394178e+17
 
-rüzgar hızı, nem, sıcaklık, rüzgar yönü
-hedef nan drop
-parametre nan median
+
+
+
+9 MAYIS 2025 TARİHLİ TOPLANTI
+
+  rüzgar hızı, nem, sıcaklık, rüzgar yönü
+  hedef nan drop
+  parametre nan median
+
+
+--- SENARYO 1 BAŞLIYOR (Belirtilen hedefler için Random Forest) ---
+Toplam 2 istasyon bulundu.
+
+--- İstasyon ID: 7761 ---
+  --- Hedef Değişken: 10-min mean wind speed ---
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    Random Forest: MAE=0.8465, MSE=1.4355, RMSE=1.1981, R2=0.4574, MAPE=38.05%
+  --- Hedef Değişken: Humidity ---
+    Random Forest: MAE=0.4136, MSE=0.8138, RMSE=0.9021, R2=0.9958, MAPE=0.62%
+  --- Hedef Değişken: Temperature ---
+    Random Forest: MAE=0.0375, MSE=0.0097, RMSE=0.0987, R2=0.9998, MAPE=0.01%
+  --- Hedef Değişken: 10-min mean wind direction ---
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    Random Forest: MAE=39.3305, MSE=3686.2306, RMSE=60.7143, R2=0.5946, MAPE=62.00%
+
+--- İstasyon ID: 7790 ---
+  --- Hedef Değişken: 10-min mean wind speed ---
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    Random Forest: MAE=0.9214, MSE=1.7606, RMSE=1.3269, R2=0.4671, MAPE=46.36%
+  --- Hedef Değişken: Humidity ---
+    Random Forest: MAE=0.6264, MSE=1.9806, RMSE=1.4073, R2=0.9924, MAPE=0.94%
+  --- Hedef Değişken: Temperature ---
+    Random Forest: MAE=0.0458, MSE=0.0243, RMSE=0.1558, R2=0.9995, MAPE=0.02%
+  --- Hedef Değişken: 10-min mean wind direction ---
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    Random Forest: MAE=50.6864, MSE=5432.6715, RMSE=73.7067, R2=0.3130, MAPE=86.00%
+
+Senaryo 1 tamamlandı.
+
+
+
+--- SENARYO 2 BAŞLIYOR (Belirtilen hedefler için Random Forest) ---
+
+--- Hedef Değişken: 10-min mean wind speed ---
+  Model Eğitiliyor: Random Forest...
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    Random Forest: MAE=0.9289, MSE=1.7565, RMSE=1.3253, R2=0.4244, MAPE=45.08%
+
+--- Hedef Değişken: Humidity ---
+  Model Eğitiliyor: Random Forest...
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    Random Forest: MAE=0.2641, MSE=0.5183, RMSE=0.7199, R2=0.9977, MAPE=0.38%
+
+--- Hedef Değişken: Temperature ---
+  Model Eğitiliyor: Random Forest...
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    Random Forest: MAE=0.0242, MSE=0.0082, RMSE=0.0908, R2=0.9998, MAPE=0.01%
+
+--- Hedef Değişken: 10-min mean wind direction ---
+  Model Eğitiliyor: Random Forest...
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    Random Forest: MAE=66.4049, MSE=6876.9718, RMSE=82.9275, R2=0.2694, MAPE=106.46%
+
+Senaryo 2 tamamlandı.
+
+
+
+
+
+
+Rüzgar yönü tahmini için:
+  Açısal veriye özel yöntemler (örn. sine-cosine dönüşümü) denenebilir.
+  Alternatif modeller (örn. Circular Regression, SVM) test edilebilir.
+
+Rüzgar hızı için:
+  Özellik mühendisliği geliştirilebilir (örn. rüzgar yönü ve basınç etkileşimi).
+  Model karşılaştırması yapıldığında belki XGBoost veya Gradient Boosting daha iyi olabilir.
+
+Model karşılaştırması:
+  Kodda sadece Random Forest denenmiş. Diğer algoritmalar da test edilerek karşılaştırma yapılmalı (bu zaten senaryonun devamı olacak gibi duruyor).
+
+MAPE değerleri yüksek olanlar için:
+  Verinin normalize edilmesi veya outlier temizliği fayda sağlayabilir.
+

@@ -6,152 +6,200 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.impute import SimpleImputer
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error, mean_absolute_percentage_error
 
-# --- Veri Yükleme ve Ön İşleme Fonksiyonları (senaryo2.py'den benzer) ---
-
-def parse_month_string_value(value):
+def parse_mixed_wind_speed(value):
+    if isinstance(value, (int, float)): # Eğer zaten sayısal ise doğrudan döndür
+        return float(value)
     if isinstance(value, str):
-        match = re.match(r"(\d+)\.(?:Oca|Şub|Mar|Nis|May|Haz|Tem|Ağu|Eyl|Eki|Kas|Ara)", value, re.IGNORECASE)
-        if match:
+        # Önce "X.AyAdı" formatını dene
+        match_month = re.match(r"(\d+(?:\.\d+)?)\.(?:Oca|Şub|Mar|Nis|May|Haz|Tem|Ağu|Eyl|Eki|Kas|Ara)", value, re.IGNORECASE)
+        if match_month:
             try:
-                return float(match.group(1))
+                return float(match_month.group(1))
             except ValueError:
-                return np.nan
-    return np.nan
+                return np.nan # Sayısal kısım parse edilemezse NaN
+
+        # Sonra doğrudan sayısal olup olmadığını dene (virgül ve nokta ondalık ayırıcılarını destekle)
+        try:
+            # Önce virgülü noktaya çevir (eğer varsa), sonra float'a çevirmeyi dene
+            return float(value.replace(',', '.'))
+        except ValueError:
+            return np.nan # Hiçbir format uyuşmuyorsa NaN
+    return np.nan # Diğer tipler için (list, dict vb.) NaN
 
 try:
     df_main = pd.read_csv('dataset_synop.csv', sep=';')
+    # Sütun adlarındaki başındaki/sonundaki boşlukları temizle
+    df_main.columns = df_main.columns.str.strip()
 except FileNotFoundError:
     print("Hata: 'dataset_synop.csv' dosyası bulunamadı. Lütfen dosya yolunu kontrol edin.")
     exit()
 
 print("Veri başarıyla yüklendi.")
+# print("CSV'den yüklenen ve temizlenen sütun adları:", df_main.columns.tolist()) # Kontrol için eklenebilir
 
 df_processed = df_main.copy()
 
-# Modellemede kullanılacak temel fiziksel ölçüm sütunları
-physical_measurement_columns = [
-    'Sea level pressure',
-    '3-hour pressure variation',
-    # '10-min mean wind speed', # Bu sütun bozuk olduğu için çıkarıldı, gerekirse eklenebilir
-    'Temperature',
-    'Dew point',
-    'Humidity',
-    'Horizontal visibility',
-    'Total cloud cover',
-    'Station pressure',
-    '24-hour pressure variation',
-    'Precipitation in the last 24 hours'
+targets_to_predict = ['10-min mean wind speed', 'Humidity', 'Temperature', '10-min mean wind direction']
+other_potential_features = [
+    'Sea level pressure', '3-hour pressure variation', 'Dew point',
+    'Horizontal visibility', 'Total cloud cover', 'Station pressure',
+    '24-hour pressure variation', 'Precipitation in the last 24 hours'
 ]
+all_relevant_columns = sorted(list(set(targets_to_predict + other_potential_features)))
+month_string_columns = ['10-min mean wind speed'] # Bu artık yanıltıcı olabilir, belki mixed_format_wind_columns gibi bir isim?
 
-# "X.AyAdı" formatında parse edilecek sütunlar (eğer varsa ve kullanılacaksa)
-# '10-min mean wind speed' bozuk olduğu için şimdilik boş bırakıyorum.
-month_string_columns = [] # Örn: ['10-min mean wind speed']
+# Sütunları işle (tip dönüşümü)
+for col in df_processed.columns: # Veya sadece all_relevant_columns içinde dönebilirsiniz
+    if col == '10-min mean wind speed': # Sadece bu özel sütun için yeni fonksiyonu kullan
+        df_processed[col] = df_processed[col].apply(parse_mixed_wind_speed)
+    elif col in all_relevant_columns and col not in month_string_columns: # Diğer sayısal sütunlar
+        if col not in df_processed.columns: # Bu kontrol aslında döngü df_processed.columns üzerinde olduğu için gereksiz
+            continue
+        df_processed[col] = pd.to_numeric(df_processed[col], errors='coerce')
+    # month_string_columns içindeki diğer sütunlar (eğer varsa) eski parse_month_string_value ile işlenebilir
+    # veya onlar için de ayrı bir mantık gerekebilir. Şu an sadece rüzgar hızı için bu özel durumu ele alıyoruz.
 
-# 1. "X.AyAdı" formatındaki sütunları işle (eğer varsa)
-for col in month_string_columns:
+for col in all_relevant_columns:
     if col in df_processed.columns:
-        df_processed[col] = df_processed[col].apply(parse_month_string_value)
-
-# 2. Seçilen tüm fiziksel ölçüm sütunlarını sayısal değere dönüştür, hataları NaN yap
-for col in physical_measurement_columns:
-    if col in df_processed.columns:
-        if col not in month_string_columns or pd.api.types.is_object_dtype(df_processed[col]):
+        if col not in month_string_columns:
             df_processed[col] = pd.to_numeric(df_processed[col], errors='coerce')
     else:
-        print(f"Uyarı: Ana DataFrame'de {col} sütunu bulunamadı.")
+        # Eğer month_string_columns içinde değilse ve df_processed'da yoksa, burada da uyarı verilebilir.
+        if col not in month_string_columns: # month_string_columns için uyarı yukarıda verildi
+             print(f"Uyarı: Ana DataFrame'de '{col}' sütunu bulunamadı. CSV başlıklarını kontrol edin.")
 
-# --- Senaryo 1: Her istasyon için lokal verilerle Random Forest ---
 
 station_ids = df_processed['WMO Station ID'].unique()
-
-print(f"\n--- SENARYO 1 BAŞLIYOR (Sadece Random Forest) ---")
-print(f"Toplam {len(station_ids)} istasyon bulundu: {station_ids}")
+print(f"\n--- SENARYO 1 BAŞLIYOR (Belirtilen hedefler için Random Forest) ---")
+print(f"Toplam {len(station_ids)} istasyon bulundu.")
 
 for station_id in station_ids:
     print(f"\n--- İstasyon ID: {station_id} ---")
     
-    df_station = df_processed[df_processed['WMO Station ID'] == station_id].copy()
+    df_station_raw = df_processed[df_processed['WMO Station ID'] == station_id].copy()
     
-    # Bu istasyon için modellemede kullanılacak sütunları belirle
-    # Sadece bu istasyonda var olan ve physical_measurement_columns listesindeki sütunları al
-    station_physical_cols_present = [col for col in physical_measurement_columns if col in df_station.columns]
-    df_station_model_data = df_station[station_physical_cols_present].copy()
-    
-    # Bu istasyon için tamamen NaN olan sütunları çıkar
-    df_station_model_data.dropna(axis=1, how='all', inplace=True)
-    
-    # Modelleme için kullanılacak nihai sütun listesi (bu istasyon için)
-    station_cols_for_modeling = df_station_model_data.columns.tolist()
-    
-    if not station_cols_for_modeling or len(station_cols_for_modeling) < 2: # En az 1 özellik 1 hedef lazım
-        print(f"  Uyarı: {station_id} istasyonu için modelleme yapılacak yeterli ({len(station_cols_for_modeling)}) sütun bulunamadı. Atlanıyor.")
+    station_cols_available = [col for col in all_relevant_columns if col in df_station_raw.columns]
+    if not station_cols_available:
+        print(f"  Uyarı: {station_id} istasyonu için {all_relevant_columns} listesinden hiçbir ilgili sütun bulunamadı. Atlanıyor.")
         continue
         
-    # Eksik değerleri bu istasyonun verileriyle medyan ile doldur
-    imputer = SimpleImputer(strategy='median')
-    df_station_imputed = pd.DataFrame(imputer.fit_transform(df_station_model_data), columns=station_cols_for_modeling)
+    df_station_data = df_station_raw[station_cols_available].copy()
+    df_station_data.dropna(axis=1, how='all', inplace=True)
     
-    if df_station_imputed.empty or len(df_station_imputed) < 5: # Train/test split için yeterli satır kontrolü
-        print(f"  Uyarı: {station_id} istasyonu için eksik değer doldurma sonrası yeterli veri ({len(df_station_imputed)} satır) kalmadı. Atlanıyor.")
+    if df_station_data.empty or len(df_station_data.columns) < 2:
+        print(f"  Uyarı: {station_id} istasyonu için (NaN sütunlar çıkarıldıktan sonra) modelleme yapılacak yeterli ({len(df_station_data.columns)}) sütun bulunamadı. Atlanıyor.")
         continue
-
-    for target_col in station_cols_for_modeling:
-        print(f"  --- Hedef Değişken: {target_col} ---")
         
-        y_station = df_station_imputed[target_col]
-        X_station = df_station_imputed.drop(columns=[target_col])
-        
-        if X_station.empty:
-            print(f"    Uyarı: {target_col} için özellik kalmadı. Atlanıyor.")
+    for target_col in targets_to_predict:
+        if target_col not in df_station_data.columns:
+            print(f"  Uyarı: Hedef değişken '{target_col}', {station_id} istasyon verisinde (df_station_data içinde) bulunmuyor. Atlanıyor.")
             continue
         
-        # Veriyi eğitim ve test setlerine ayır (istasyon özelinde)
-        # Yeterli veri yoksa (örn: <2 sample testte) hata verebilir.
-        # test_size=0.2, en az 5 satır olmalı ki testte 1 satır kalsın.
-        # R2 için testte en az 2 satır olması daha iyi.
-        min_samples_for_split = 5 
-        if len(X_station) < min_samples_for_split:
-            print(f"    Uyarı: {target_col} için yetersiz veri ({len(X_station)} satır). Train/test split yapılamıyor. Atlanıyor.")
+        print(f"  --- Hedef Değişken: {target_col} ---")
+        
+        y_station_full = df_station_data[target_col].copy()
+        X_station_full = df_station_data.drop(columns=[target_col], errors='ignore')
+
+        if X_station_full.empty:
+            print(f"    Uyarı: {target_col} için özellik kalmadı. Atlanıyor.")
+            continue
+            
+        valid_target_indices = y_station_full.dropna().index
+        y_station = y_station_full.loc[valid_target_indices]
+        X_station = X_station_full.loc[valid_target_indices]
+        
+        if X_station.empty or y_station.empty or len(X_station) < 5:
+            print(f"    Uyarı: {target_col} için hedefte NaN olmayan yeterli veri ({len(X_station)} satır) kalmadı. Atlanıyor.")
             continue
 
         X_train, X_test, y_train, y_test = train_test_split(X_station, y_station, test_size=0.2, random_state=42)
         
-        if X_test.empty:
-            print(f"    Uyarı: {target_col} için test seti boş kaldı. Atlanıyor.")
+        if X_train.empty or X_test.empty:
+            print(f"    Uyarı: {target_col} için train/test split sonrası boş küme(ler) oluştu. Atlanıyor.")
             continue
 
-        # Random Forest Model
-        # Parametreleri veri setinin büyüklüğüne göre ayarlayabilirsin.
-        # Örnek: n_estimators=100, max_depth=None (veya daha büyük bir sayı)
+        feature_names = X_train.columns.tolist()
+        imputer = SimpleImputer(strategy='median')
+        X_train_imputed = pd.DataFrame(imputer.fit_transform(X_train), columns=feature_names)
+        X_test_imputed = pd.DataFrame(imputer.transform(X_test), columns=feature_names)
+
+        y_test_reset = y_test.reset_index(drop=True)
+        X_test_imputed_reset = X_test_imputed.reset_index(drop=True)
+
+        y_test_name_original = y_test_reset.name if y_test_reset.name is not None else target_col # Fallback to target_col
+        y_test_name_for_concat = y_test_name_original
+        # Ensure unique column name for y in concat
+        i = 0
+        while y_test_name_for_concat in X_test_imputed_reset.columns:
+            y_test_name_for_concat = f"{y_test_name_original}_{i}"
+            i += 1
+        if y_test_name_original != y_test_name_for_concat:
+             y_test_reset = y_test_reset.rename(y_test_name_for_concat)
+
+
+        temp_test_df = pd.concat([X_test_imputed_reset, y_test_reset], axis=1)
+        cleaned_test_df = temp_test_df.dropna()
+
+        if cleaned_test_df.empty:
+            print(f"    Uyarı: {target_col} için test setinde NaN temizliği sonrası veri kalmadı. Atlanıyor.")
+            continue
+            
+        X_test_final = cleaned_test_df.drop(columns=[y_test_name_for_concat]) # Use the name used in concat
+        y_test_final = cleaned_test_df[y_test_name_for_concat]
+        
+        if X_test_final.empty or y_test_final.empty or len(X_test_final) < 1 :
+            print(f"    Uyarı: {target_col} için test seti temizlik sonrası yetersiz ({len(X_test_final)} örnek). Atlanıyor.")
+            continue
+
         model = RandomForestRegressor(random_state=42, n_estimators=100, max_depth=None) 
         
         try:
-            model.fit(X_train, y_train)
-            y_pred = model.predict(X_test)
+            model.fit(X_train_imputed, y_train)
+            y_pred = model.predict(X_test_final)
             
-            mae = mean_absolute_error(y_test, y_pred)
-            mse = mean_squared_error(y_test, y_pred)
+            mae = mean_absolute_error(y_test_final, y_pred)
+            mse = mean_squared_error(y_test_final, y_pred)
             rmse = np.sqrt(mse)
             r2 = np.nan
-            mape = np.nan
+            mape = np.nan 
             r2_note = ""
 
-            if len(y_test) >= 2: # R2 için en az 2 örnek
-                r2 = r2_score(y_test, y_pred)
+            if len(y_test_final) >= 2:
+                r2 = r2_score(y_test_final, y_pred)
             else:
-                r2_note = " (R² tanımsız: <2 örnek)"
+                r2_note = " (R² tanımsız: <2 test örneği)"
             
-            try:
-                # y_test'te 0 varsa MAPE tanımsız olabilir.
-                # np.finfo(float).eps küçük bir sayı ekleyerek sıfıra bölmeyi engelleme denemesi (dikkatli kullanılmalı)
-                # Veya sklearn'in kendi MAPE'si genellikle bunu yönetir.
-                mape = mean_absolute_percentage_error(y_test, y_pred) * 100 # Yüzde olarak
-            except ZeroDivisionError: # Bu aslında sklearn.metrics.mean_absolute_percentage_error'da pek olmaz
-                 print(f"      UYARI: MAPE hesaplanırken sıfıra bölme (y_test'te 0 olabilir). MAPE NaN.")
+            # Calculate MAPE if possible
+            # Check for zeros in y_test_final to avoid division by zero or انفجار MAPE
+            if not np.isinf(y_pred).any() and not np.isnan(y_pred).any(): # Ensure y_pred is clean
+                if np.all(y_test_final != 0): # Ensure no zeros in actual values
+                    mape = mean_absolute_percentage_error(y_test_final, y_pred) * 100
+                else:
+                    # For rows where y_test_final is 0, MAPE is problematic.
+                    # We can calculate MAPE for non-zero rows or report as N/A.
+                    non_zero_mask = y_test_final != 0
+                    if np.any(non_zero_mask): # If there are some non-zero values
+                        mape = mean_absolute_percentage_error(y_test_final[non_zero_mask], y_pred[non_zero_mask]) * 100
+                        print(f"      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.")
+                    else: # All y_test_final are zero
+                        print(f"      Bilgi: MAPE hesaplanamıyor (tüm y_test_final değerleri sıfır).")
+                        mape = np.nan # explicitly set to nan
+            else:
+                print(f"      Bilgi: MAPE hesaplanamıyor (y_pred'de inf veya NaN değerler var).")
+
+
+            # Prepare MAPE string for printing
+            mape_str_display = "N/A"
+            if not np.isnan(mape) and not np.isinf(mape):
+                mape_str_display = f"{mape:.2f}%"
             
-            print(f"    Random Forest: MAE={mae:.4f}, MSE={mse:.4f}, RMSE={rmse:.4f}, R2={r2:.4f}{r2_note}, MAPE={mape:.2f}%")
+            r2_display = f"{r2:.4f}" if not np.isnan(r2) else "N/A" 
+            print(f"    Random Forest: MAE={mae:.4f}, MSE={mse:.4f}, RMSE={rmse:.4f}, R2={r2_display}{r2_note}, MAPE={mape_str_display}")
 
         except Exception as e:
-            print(f"    Hata (Random Forest modeli, {target_col} hedefi için): {e}")
+            print(f"    Hata (Random Forest modeli, {target_col} hedefi için, İstasyon {station_id}): {e}")
+            import traceback
+            traceback.print_exc()
+
 
 print("\nSenaryo 1 tamamlandı.")

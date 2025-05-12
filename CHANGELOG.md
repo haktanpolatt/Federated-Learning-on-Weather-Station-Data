@@ -1,9 +1,12 @@
-RANDOM FOREST
+# Federated Learning on Weather Station Data
 
-SENARYO 1
+# RANDOM FOREST
 
+## 9 Mayıs Öncesi 
 
-CLEAN
+### SENARYO 1
+
+#### CLEAN
 
 İstasyon 7761 için sonuçlar:
 Mean Absolute Error (MAE): 3.686579937691042
@@ -17,9 +20,7 @@ Mean Squared Error (MSE): 25.189406406664958
 Root Mean Squared Error (RMSE): 5.018904901137793
 R^2 Score: 0.46460385054868425
 
-
-
-MEAN
+#### MEAN
 
 İstasyon 7761 için sonuçlar:
 Mean Absolute Error (MAE): 0.00023078677423129127
@@ -33,9 +34,7 @@ Mean Squared Error (MSE): 9.735229470728015e-06
 Root Mean Squared Error (RMSE): 0.003120132925169698
 R^2 Score: 0.9999997885622143
 
-
-
-MEDIAN
+#### MEDIAN
 
 İstasyon 7761 için sonuçlar:
 Mean Absolute Error (MAE): 0.00022040864257537237
@@ -49,9 +48,7 @@ Mean Squared Error (MSE): 9.1185803267159e-06
 Root Mean Squared Error (RMSE): 0.0030196987145600968
 R^2 Score: 0.9999998019588758
 
-
-
-Interpolasyon ve Hiperparametre ayarı yapılmış Hal
+#### Interpolasyon ve Hiperparametre ayarı yapılmış Hal
 
 İstasyon 7761 için sonuçlar:
 Mean Absolute Error (MAE): 0.0020683311467548427
@@ -65,18 +62,12 @@ Mean Squared Error (MSE): 0.09140171125580605
 Root Mean Squared Error (RMSE): 0.30232715930892823
 R^2 Score: 0.9980234195781912
 
-
-
 R^2 skorları çok iyi, overfitting ihtimali??
-
-
 
 Untitled-1
 Random Forest - MAE: 0.0012570847171043465, R²: 0.999501490611814
 
-
-
-SENARYO 1
+### SENARYO 1
 
 --- İstasyon ID: 7761 ---
   --- Hedef Değişken: Sea level pressure ---
@@ -122,10 +113,7 @@ SENARYO 1
   --- Hedef Değişken: Precipitation in the last 24 hours ---
     Random Forest: MAE=1.6165, MSE=34.9459, RMSE=5.9115, R2=0.0647, MAPE=257944475801778752.00%
 
-
-
-
-SENARYO 2
+### SENARYO 2
 
 --- Sonuçların Özeti (MAE) ---
                                     Random Forest
@@ -192,18 +180,15 @@ Station pressure                     2.472655e-02
 24-hour pressure variation           1.509705e+19
 Precipitation in the last 24 hours   2.394178e+17
 
-
-
-
-9 MAYIS 2025 TARİHLİ TOPLANTI
+## 9 MAYIS 2025 TARİHLİ TOPLANTI
 
   rüzgar hızı, nem, sıcaklık, rüzgar yönü
   hedef nan drop
   parametre nan median
 
+## 12 MAYIS 2025
 
-
-12 MAYIS 2025
+### SENARYO 1
 
 --- SENARYO 1 BAŞLIYOR (Belirtilen hedefler için Random Forest) ---
 Toplam 2 istasyon bulundu.
@@ -234,7 +219,7 @@ Toplam 2 istasyon bulundu.
 
 Senaryo 1 tamamlandı.
 
-
+### SENARYO 2
 
 --- SENARYO 2 BAŞLIYOR (Belirtilen hedefler için Random Forest) ---
 
@@ -260,6 +245,7 @@ Senaryo 1 tamamlandı.
 
 Senaryo 2 tamamlandı.
 
+### TAVSİYELER
 
 Rüzgar yönü tahmini için:
   Açısal veriye özel yöntemler (örn. sine-cosine dönüşümü) denenebilir.
@@ -275,8 +261,9 @@ Model karşılaştırması:
 MAPE değerleri yüksek olanlar için:
   Verinin normalize edilmesi veya outlier temizliği fayda sağlayabilir.
 
+### RÜZGAR YÖNÜ VE HIZI TAHMİNLERİ İÇİN VERİLEN TAVSİYELER UYGULANINCA
 
-RÜZGAR YÖNÜ VE HIZI TAHMİNLERİ İÇİN VERİLEN TAVSİYELER UYGULANINCA
+#### SENARYO 1
 
 --- SENARYO 1 BAŞLIYOR (Belirtilen hedefler için Random Forest) ---
 Toplam 2 istasyon bulundu.
@@ -307,6 +294,7 @@ Toplam 2 istasyon bulundu.
 
 Senaryo 1 tamamlandı.
 
+#### SENARYO 2
 
 --- SENARYO 2 BAŞLIYOR (Belirtilen hedefler için Random Forest) ---
 
@@ -332,10 +320,11 @@ Senaryo 1 tamamlandı.
 
 Senaryo 2 tamamlandı.
 
-
-
 SENARYO 1 VE 2'DE RÜZGAR YÖNÜ İÇİN HARİKA SONUÇLAR ALINDI ANCAK RÜZGAR HIZINDA İŞLER HALA İYİ DEĞİL
-wind_dir_cos × horizontal visibility KOMBİNASYONU DENENİYOR
+
+### RÜZGAR HIZI İÇİN wind_dir_cos × horizontal visibility KOMBİNASYONU DENENİYOR
+
+#### SENARYO 2
 
 --- SENARYO 2 BAŞLIYOR (Belirtilen hedefler için Random Forest) ---
 
@@ -361,4 +350,4 @@ wind_dir_cos × horizontal visibility KOMBİNASYONU DENENİYOR
 
 Senaryo 2 tamamlandı.
 
-Hiçbir değişim yok
+Hiçbir değişim yok, değişikliklerden vazgeçildi

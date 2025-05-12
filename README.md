@@ -1,2 +1,2 @@
-# Federated-Learning-on-Weather-Station-Data
+# Federated Learning on Weather Station Data
 

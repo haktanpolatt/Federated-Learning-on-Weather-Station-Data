@@ -39,16 +39,6 @@ print("Veri başarıyla yüklendi.")
 
 df_processed = df_main.copy()
 
-targets_to_predict = ['10-min mean wind speed', 'Humidity', 'Temperature', '10-min mean wind direction']
-other_potential_features = [
-    'Sea level pressure', '3-hour pressure variation', 'Dew point',
-    'Horizontal visibility', 'Total cloud cover', 'Station pressure',
-    '24-hour pressure variation', 'Precipitation in the last 24 hours'
-]
-engineered_features = ['wind_dir_sin', 'wind_dir_cos', 'wind_pressure_interaction']
-all_relevant_columns = sorted(list(set(targets_to_predict + other_potential_features + engineered_features)))
-month_string_columns = ['10-min mean wind speed'] # Bu artık yanıltıcı olabilir, belki mixed_format_wind_columns gibi bir isim?
-
 # Açısal veriyi dönüştür (0-360 derece → sin/cos)
 if '10-min mean wind direction' in df_processed.columns:
     radians = np.radians(df_processed['10-min mean wind direction'])
@@ -59,6 +49,16 @@ if '10-min mean wind direction' in df_processed.columns:
 if 'wind_dir_sin' in df_processed.columns and 'Sea level pressure' in df_processed.columns:
     df_processed['wind_pressure_interaction'] = df_processed['wind_dir_sin'] * df_processed['Sea level pressure']
     print("wind_pressure_interaction sütunu eklendi.")
+
+targets_to_predict = ['10-min mean wind speed', 'Humidity', 'Temperature', '10-min mean wind direction']
+other_potential_features = [
+    'Sea level pressure', '3-hour pressure variation', 'Dew point',
+    'Horizontal visibility', 'Total cloud cover', 'Station pressure',
+    '24-hour pressure variation', 'Precipitation in the last 24 hours'
+]
+engineered_features = ['wind_dir_sin', 'wind_dir_cos', 'wind_pressure_interaction']
+all_relevant_columns = sorted(list(set(targets_to_predict + other_potential_features + engineered_features)))
+month_string_columns = ['10-min mean wind speed'] # Bu artık yanıltıcı olabilir, belki mixed_format_wind_columns gibi bir isim?
 
 # Sütunları işle (tip dönüşümü)
 for col in df_processed.columns: # Veya sadece all_relevant_columns içinde dönebilirsiniz

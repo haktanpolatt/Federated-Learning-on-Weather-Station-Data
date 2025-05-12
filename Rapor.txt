@@ -1,0 +1,197 @@
+RANDOM FOREST
+
+SENARYO 1
+
+
+CLEAN
+
+İstasyon 7761 için sonuçlar:
+Mean Absolute Error (MAE): 3.686579937691042
+Mean Squared Error (MSE): 21.800469797185357
+Root Mean Squared Error (RMSE): 4.669097321451477
+R^2 Score: 0.5329069732890008
+
+İstasyon 7790 için sonuçlar:
+Mean Absolute Error (MAE): 3.9943225258260386
+Mean Squared Error (MSE): 25.189406406664958
+Root Mean Squared Error (RMSE): 5.018904901137793
+R^2 Score: 0.46460385054868425
+
+
+
+MEAN
+
+İstasyon 7761 için sonuçlar:
+Mean Absolute Error (MAE): 0.00023078677423129127
+Mean Squared Error (MSE): 3.798271615650748e-05
+Root Mean Squared Error (RMSE): 0.006163011938695842
+R^2 Score: 0.9999991960571203
+
+İstasyon 7790 için sonuçlar:
+Mean Absolute Error (MAE): 0.00011286705021471535
+Mean Squared Error (MSE): 9.735229470728015e-06
+Root Mean Squared Error (RMSE): 0.003120132925169698
+R^2 Score: 0.9999997885622143
+
+
+
+MEDIAN
+
+İstasyon 7761 için sonuçlar:
+Mean Absolute Error (MAE): 0.00022040864257537237
+Mean Squared Error (MSE): 3.205342883983392e-05
+Root Mean Squared Error (RMSE): 0.005661574766779462
+R^2 Score: 0.9999993215578054
+
+İstasyon 7790 için sonuçlar:
+Mean Absolute Error (MAE): 0.00011023622049244808
+Mean Squared Error (MSE): 9.1185803267159e-06
+Root Mean Squared Error (RMSE): 0.0030196987145600968
+R^2 Score: 0.9999998019588758
+
+
+
+Interpolasyon ve Hiperparametre ayarı yapılmış Hal
+
+İstasyon 7761 için sonuçlar:
+Mean Absolute Error (MAE): 0.0020683311467548427
+Mean Squared Error (MSE): 0.0035206425321130472
+Root Mean Squared Error (RMSE): 0.05933500258795855
+R^2 Score: 0.9999255076370822
+
+İstasyon 7790 için sonuçlar:
+Mean Absolute Error (MAE): 0.021427187980687722
+Mean Squared Error (MSE): 0.09140171125580605
+Root Mean Squared Error (RMSE): 0.30232715930892823
+R^2 Score: 0.9980234195781912
+
+
+
+R^2 skorları çok iyi, overfitting ihtimali??
+
+
+
+Untitled-1
+Random Forest - MAE: 0.0012570847171043465, R²: 0.999501490611814
+
+
+
+SENARYO 1
+
+--- İstasyon ID: 7761 ---
+  --- Hedef Değişken: Sea level pressure ---
+    Random Forest: MAE=0.6801, MSE=132.4676, RMSE=11.5095, R2=0.9997, MAPE=0.00%
+  --- Hedef Değişken: 3-hour pressure variation ---
+    Random Forest: MAE=69.1767, MSE=8300.7089, RMSE=91.1082, R2=0.1755, MAPE=580084362524976256.00%
+  --- Hedef Değişken: Temperature ---
+    Random Forest: MAE=0.0369, MSE=0.0126, RMSE=0.1123, R2=0.9997, MAPE=0.01%
+  --- Hedef Değişken: Dew point ---
+    Random Forest: MAE=0.0349, MSE=0.0138, RMSE=0.1176, R2=0.9996, MAPE=0.01%
+  --- Hedef Değişken: Humidity ---
+    Random Forest: MAE=0.1728, MSE=0.1082, RMSE=0.3290, R2=0.9994, MAPE=0.27%
+  --- Hedef Değişken: Horizontal visibility ---
+    Random Forest: MAE=11072.6237, MSE=185294458.1328, RMSE=13612.2907, R2=0.2485, MAPE=55.69%
+  --- Hedef Değişken: Total cloud cover ---
+    Random Forest: MAE=13.2327, MSE=453.0258, RMSE=21.2844, R2=0.5219, MAPE=859158935441757696.00%
+  --- Hedef Değişken: Station pressure ---
+    Random Forest: MAE=0.6181, MSE=177.3201, RMSE=13.3162, R2=0.9996, MAPE=0.00%
+  --- Hedef Değişken: 24-hour pressure variation ---
+    Random Forest: MAE=199.3723, MSE=89118.9334, RMSE=298.5279, R2=0.3064, MAPE=11094970296420982784.00%
+  --- Hedef Değişken: Precipitation in the last 24 hours ---
+    Random Forest: MAE=1.3578, MSE=14.0982, RMSE=3.7548, R2=0.2907, MAPE=181757210865521440.00%
+
+--- İstasyon ID: 7790 ---
+  --- Hedef Değişken: Sea level pressure ---
+    Random Forest: MAE=4.4050, MSE=1516.2977, RMSE=38.9397, R2=0.9972, MAPE=0.00%
+  --- Hedef Değişken: 3-hour pressure variation ---
+    Random Forest: MAE=68.7032, MSE=8197.1513, RMSE=90.5381, R2=0.2041, MAPE=590088520925533696.00%
+  --- Hedef Değişken: Temperature ---
+    Random Forest: MAE=0.0446, MSE=0.0216, RMSE=0.1469, R2=0.9995, MAPE=0.02%
+  --- Hedef Değişken: Dew point ---
+    Random Forest: MAE=0.0385, MSE=0.0153, RMSE=0.1235, R2=0.9996, MAPE=0.01%
+  --- Hedef Değişken: Humidity ---
+    Random Forest: MAE=0.2987, MSE=0.3992, RMSE=0.6318, R2=0.9984, MAPE=0.47%
+  --- Hedef Değişken: Horizontal visibility ---
+    Random Forest: MAE=11324.2931, MSE=195098639.4907, RMSE=13967.7715, R2=0.2976, MAPE=1285693274277037568.00%
+  --- Hedef Değişken: Total cloud cover ---
+    Random Forest: MAE=15.6849, MSE=498.0152, RMSE=22.3163, R2=0.4073, MAPE=937737407897214976.00%
+  --- Hedef Değişken: Station pressure ---
+    Random Forest: MAE=3.6872, MSE=1728.1217, RMSE=41.5707, R2=0.9968, MAPE=0.00%
+  --- Hedef Değişken: 24-hour pressure variation ---
+    Random Forest: MAE=215.2953, MSE=100895.0079, RMSE=317.6397, R2=0.3502, MAPE=15701017567973898240.00%
+  --- Hedef Değişken: Precipitation in the last 24 hours ---
+    Random Forest: MAE=1.6165, MSE=34.9459, RMSE=5.9115, R2=0.0647, MAPE=257944475801778752.00%
+
+
+
+
+SENARYO 2
+
+--- Sonuçların Özeti (MAE) ---
+                                    Random Forest
+Sea level pressure                      28.290346
+3-hour pressure variation               68.854730
+Temperature                              0.987237
+Dew point                                0.896784
+Humidity                                 6.112490
+Horizontal visibility                11809.904163
+Total cloud cover                       16.945370
+Station pressure                        25.063366
+24-hour pressure variation             223.801681
+Precipitation in the last 24 hours       1.533372
+
+--- Sonuçların Özeti (MSE) ---
+                                    Random Forest
+Sea level pressure                   3.331343e+03
+3-hour pressure variation            8.169998e+03
+Temperature                          1.837412e+00
+Dew point                            1.417500e+00
+Humidity                             6.341180e+01
+Horizontal visibility                2.032556e+08
+Total cloud cover                    5.836371e+02
+Station pressure                     3.113472e+03
+24-hour pressure variation           1.078617e+05
+Precipitation in the last 24 hours   2.278765e+01
+
+--- Sonuçların Özeti (RMSE) ---
+                                    Random Forest
+Sea level pressure                      57.717788
+3-hour pressure variation               90.388041
+Temperature                              1.355512
+Dew point                                1.190588
+Humidity                                 7.963152
+Horizontal visibility                14256.774611
+Total cloud cover                       24.158583
+Station pressure                        55.798494
+24-hour pressure variation             328.423086
+Precipitation in the last 24 hours       4.773641
+
+--- Sonuçların Özeti (R2 Skoru) ---
+                                    Random Forest
+Sea level pressure                       0.993390
+3-hour pressure variation                0.172773
+Temperature                              0.960515
+Dew point                                0.962142
+Humidity                                 0.720138
+Horizontal visibility                    0.238337
+Total cloud cover                        0.280217
+Station pressure                         0.993839
+24-hour pressure variation               0.238600
+Precipitation in the last 24 hours       0.111891
+
+--- Sonuçların Özeti (MAPE %) ---
+                                    Random Forest
+Sea level pressure                   2.786377e-02
+3-hour pressure variation            4.451907e+17
+Temperature                          3.415008e-01
+Dew point                            3.161096e-01
+Humidity                             9.096868e+00
+Horizontal visibility                5.881757e+01
+Total cloud cover                    1.162723e+18
+Station pressure                     2.472655e-02
+24-hour pressure variation           1.509705e+19
+Precipitation in the last 24 hours   2.394178e+17
+
+rüzgar hızı, nem, sıcaklık, rüzgar yönü
+hedef nan drop
+parametre nan median

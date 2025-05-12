@@ -27,7 +27,7 @@ def parse_mixed_wind_speed(value):
     return np.nan # Diğer tipler için (list, dict vb.) NaN
 
 try:
-    df = pd.read_csv('dataset_synop.csv', sep=';')
+    df = pd.read_csv('Data/dataset_synop.csv', sep=';')
 except FileNotFoundError:
     print("Hata: 'dataset_synop.csv' dosyası bulunamadı. Lütfen dosya yolunu kontrol edin.")
     exit()

@@ -27,7 +27,7 @@ def parse_mixed_wind_speed(value):
     return np.nan # Diğer tipler için (list, dict vb.) NaN
 
 try:
-    df_main = pd.read_csv('dataset_synop.csv', sep=';')
+    df_main = pd.read_csv('Data/dataset_synop.csv', sep=';')
     # Sütun adlarındaki başındaki/sonundaki boşlukları temizle
     df_main.columns = df_main.columns.str.strip()
 except FileNotFoundError:
@@ -35,7 +35,7 @@ except FileNotFoundError:
     exit()
 
 print("Veri başarıyla yüklendi.")
-# print("CSV'den yüklenen ve temizlenen sütun adları:", df_main.columns.tolist()) # Kontrol için eklenebilir
+print("CSV'den yüklenen ve temizlenen sütun adları:", df_main.columns.tolist()) # Kontrol için eklenebilir
 
 df_processed = df_main.copy()
 

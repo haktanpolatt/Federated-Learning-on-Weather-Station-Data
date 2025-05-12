@@ -3,7 +3,6 @@ import numpy as np
 import re
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.preprocessing import StandardScaler # Gerekirse diğer modeller için
 from sklearn.impute import SimpleImputer
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error, mean_absolute_percentage_error
 
@@ -28,7 +27,7 @@ def parse_mixed_wind_speed(value):
     return np.nan # Diğer tipler için (list, dict vb.) NaN
 
 try:
-    df = pd.read_csv('dataset_synop.csv', sep=';')
+    df = pd.read_csv('Data/dataset_synop.csv', sep=';')
 except FileNotFoundError:
     print("Hata: 'dataset_synop.csv' dosyası bulunamadı. Lütfen dosya yolunu kontrol edin.")
     exit()

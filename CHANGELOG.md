@@ -351,3 +351,121 @@ SENARYO 1 VE 2'DE RÜZGAR YÖNÜ İÇİN HARİKA SONUÇLAR ALINDI ANCAK RÜZGAR 
 Senaryo 2 tamamlandı.
 
 Hiçbir değişim yok, değişikliklerden vazgeçildi
+
+### DECISION TREE
+
+#### SENARYO 1
+
+--- SENARYO 1 BAŞLIYOR (Belirtilen hedefler için Random Forest) ---
+Toplam 2 istasyon bulundu.
+
+--- İstasyon ID: 7761 ---
+  --- Hedef Değişken: 10-min mean wind speed ---
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    Random Forest: MAE=1.1960, MSE=2.9237, RMSE=1.7099, R2=-0.1051, MAPE=49.25%
+  --- Hedef Değişken: Humidity ---
+    Random Forest: MAE=0.7008, MSE=2.3734, RMSE=1.5406, R2=0.9877, MAPE=1.05%
+  --- Hedef Değişken: Temperature ---
+    Random Forest: MAE=0.0706, MSE=0.0546, RMSE=0.2337, R2=0.9988, MAPE=0.02%
+  --- Hedef Değişken: 10-min mean wind direction ---
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    Random Forest: MAE=0.0000, MSE=0.0000, RMSE=0.0000, R2=1.0000, MAPE=0.00%
+
+--- İstasyon ID: 7790 ---
+  --- Hedef Değişken: 10-min mean wind speed ---
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    Random Forest: MAE=1.2804, MSE=3.5044, RMSE=1.8720, R2=-0.0606, MAPE=59.30%
+  --- Hedef Değişken: Humidity ---
+    Random Forest: MAE=1.3643, MSE=6.6267, RMSE=2.5742, R2=0.9745, MAPE=2.08%
+  --- Hedef Değişken: Temperature ---
+    Random Forest: MAE=0.0890, MSE=0.0989, RMSE=0.3145, R2=0.9979, MAPE=0.03%
+  --- Hedef Değişken: 10-min mean wind direction ---
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    Random Forest: MAE=0.0000, MSE=0.0000, RMSE=0.0000, R2=1.0000, MAPE=0.00%
+
+Senaryo 1 tamamlandı.
+
+#### SENARYO 2
+
+--- SENARYO 2 BAŞLIYOR (Belirtilen hedefler için Random Forest) ---
+
+--- Hedef Değişken: 10-min mean wind speed ---
+  Model Eğitiliyor: Decision Tree...
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    Decision Tree: MAE=1.3170, MSE=3.6520, RMSE=1.9110, R2=-0.1968, MAPE=58.49%
+
+--- Hedef Değişken: Humidity ---
+  Model Eğitiliyor: Decision Tree...
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    Decision Tree: MAE=0.4488, MSE=1.8933, RMSE=1.3760, R2=0.9917, MAPE=0.64%
+
+--- Hedef Değişken: Temperature ---
+  Model Eğitiliyor: Decision Tree...
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    Decision Tree: MAE=0.0418, MSE=0.0411, RMSE=0.2028, R2=0.9991, MAPE=0.01%
+
+--- Hedef Değişken: 10-min mean wind direction ---
+  Model Eğitiliyor: Decision Tree...
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    Decision Tree: MAE=0.0000, MSE=0.0000, RMSE=0.0000, R2=1.0000, MAPE=0.00%
+
+Senaryo 2 tamamlandı.
+
+### XGBOOST
+
+#### SENARYO 1
+
+--- SENARYO 1 BAŞLIYOR (Belirtilen hedefler için Random Forest) ---
+Toplam 2 istasyon bulundu.
+
+--- İstasyon ID: 7761 ---
+  --- Hedef Değişken: 10-min mean wind speed ---
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    Random Forest: MAE=0.8478, MSE=1.4531, RMSE=1.2054, R2=0.4508, MAPE=38.06%
+  --- Hedef Değişken: Humidity ---
+    Random Forest: MAE=0.8064, MSE=1.3630, RMSE=1.1675, R2=0.9930, MAPE=1.21%
+  --- Hedef Değişken: Temperature ---
+    Random Forest: MAE=0.0922, MSE=0.0304, RMSE=0.1743, R2=0.9994, MAPE=0.03%
+  --- Hedef Değişken: 10-min mean wind direction ---
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    Random Forest: MAE=0.0024, MSE=0.0000, RMSE=0.0026, R2=1.0000, MAPE=0.00%
+
+--- İstasyon ID: 7790 ---
+  --- Hedef Değişken: 10-min mean wind speed ---
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    Random Forest: MAE=0.9260, MSE=1.7392, RMSE=1.3188, R2=0.4736, MAPE=46.24%
+  --- Hedef Değişken: Humidity ---
+    Random Forest: MAE=1.0812, MSE=2.1432, RMSE=1.4640, R2=0.9918, MAPE=1.65%
+  --- Hedef Değişken: Temperature ---
+    Random Forest: MAE=0.0937, MSE=0.0484, RMSE=0.2200, R2=0.9990, MAPE=0.03%
+  --- Hedef Değişken: 10-min mean wind direction ---
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    Random Forest: MAE=0.0020, MSE=0.0000, RMSE=0.0024, R2=1.0000, MAPE=0.00%
+
+Senaryo 1 tamamlandı.
+
+#### SENARYO 2
+
+--- SENARYO 2 BAŞLIYOR (Belirtilen hedefler için Random Forest) ---
+
+--- Hedef Değişken: 10-min mean wind speed ---
+  Model Eğitiliyor: XGBoost...
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    XGBoost: MAE=0.9421, MSE=1.7837, RMSE=1.3356, R2=0.4154, MAPE=45.28%
+
+--- Hedef Değişken: Humidity ---
+  Model Eğitiliyor: XGBoost...
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    XGBoost: MAE=0.5002, MSE=0.5642, RMSE=0.7512, R2=0.9975, MAPE=0.77%
+
+--- Hedef Değişken: Temperature ---
+  Model Eğitiliyor: XGBoost...
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    XGBoost: MAE=0.0831, MSE=0.0226, RMSE=0.1505, R2=0.9995, MAPE=0.03%
+
+--- Hedef Değişken: 10-min mean wind direction ---
+  Model Eğitiliyor: XGBoost...
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    XGBoost: MAE=0.0023, MSE=0.0000, RMSE=0.0026, R2=1.0000, MAPE=0.00%
+
+Senaryo 2 tamamlandı.

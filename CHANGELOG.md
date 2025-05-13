@@ -504,3 +504,74 @@ Toplam 2 istasyon bulundu.
 Senaryo 1 tamamlandı.
 
 Neredeyse hiçbir değişim yok, değişikliklerden vazgeçildi.
+
+## 13 MAYIS 2025
+
+### RANDOM FOREST
+
+#### VALIDATION DATA İLE EĞİTİM
+
+##### SENARYO 1
+
+--- SENARYO 1 BAŞLIYOR (Belirtilen hedefler için Random Forest) ---
+Toplam 2 istasyon bulundu.
+
+--- İstasyon ID: 7761 ---
+  --- Hedef Değişken: 10-min mean wind speed ---
+    [VALIDATION] MAE=0.8718, MSE=1.4967, RMSE=1.2234, R2=0.44295107929101385
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    Random Forest: MAE=0.8554, MSE=1.4650, RMSE=1.2104, R2=0.4636, MAPE=38.37%
+  --- Hedef Değişken: Humidity ---
+    [VALIDATION] MAE=0.5156, MSE=1.3268, RMSE=1.1519, R2=0.9932815171804111
+    Random Forest: MAE=0.4987, MSE=1.1311, RMSE=1.0635, R2=0.9941, MAPE=0.76%
+  --- Hedef Değişken: Temperature ---
+    [VALIDATION] MAE=0.0510, MSE=0.0276, RMSE=0.1661, R2=0.9994123892358171
+    Random Forest: MAE=0.0510, MSE=0.0279, RMSE=0.1671, R2=0.9994, MAPE=0.02%
+  --- Hedef Değişken: 10-min mean wind direction ---
+    [VALIDATION] MAE=0.0002, MSE=0.0002, RMSE=0.0157, R2=0.9999999724971429
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    Random Forest: MAE=0.0057, MSE=0.0666, RMSE=0.2580, R2=1.0000, MAPE=0.00%
+
+--- İstasyon ID: 7790 ---
+  --- Hedef Değişken: 10-min mean wind speed ---
+    [VALIDATION] MAE=0.9213, MSE=1.7240, RMSE=1.3130, R2=0.45247448132473334
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    Random Forest: MAE=0.9196, MSE=1.7710, RMSE=1.3308, R2=0.4736, MAPE=46.40%
+  --- Hedef Değişken: Humidity ---
+    [VALIDATION] MAE=0.7874, MSE=2.3477, RMSE=1.5322, R2=0.9908280697958882
+    Random Forest: MAE=0.7870, MSE=2.4385, RMSE=1.5616, R2=0.9908, MAPE=1.18%
+  --- Hedef Değişken: Temperature ---
+    [VALIDATION] MAE=0.0541, MSE=0.0294, RMSE=0.1715, R2=0.9993748329428025
+    Random Forest: MAE=0.0542, MSE=0.0169, RMSE=0.1301, R2=0.9996, MAPE=0.02%
+  --- Hedef Değişken: 10-min mean wind direction ---
+    [VALIDATION] MAE=0.0015, MSE=0.0055, RMSE=0.0739, R2=0.9999992993620446
+      Bilgi: MAPE, y_test_final'daki sıfır olmayan değerler için hesaplandı.
+    Random Forest: MAE=0.0022, MSE=0.0060, RMSE=0.0772, R2=1.0000, MAPE=0.00%
+
+Senaryo 1 tamamlandı.
+
+##### SENARYO 2
+
+--- SENARYO 2 BAŞLIYOR (Validation ile Random Forest) ---
+
+--- Hedef Değişken: 10-min mean wind speed ---
+  Model eğitiliyor: Random Forest
+    Val: MAE=0.9448, RMSE=1.3390, R2=0.42556060983995103
+    Test: MAE=0.9368, RMSE=1.3278, R2=0.41284090493242587, MAPE=45.98%
+
+--- Hedef Değişken: Humidity ---
+  Model eğitiliyor: Random Forest
+    Val: MAE=0.3244, RMSE=0.8121, R2=0.9971111602940029
+    Test: MAE=0.3381, RMSE=0.9236, R2=0.9962163164574974, MAPE=0.48%
+
+--- Hedef Değişken: Temperature ---
+  Model eğitiliyor: Random Forest
+    Val: MAE=0.0334, RMSE=0.1374, R2=0.999590676185685
+    Test: MAE=0.0330, RMSE=0.1476, R2=0.9995305791614, MAPE=0.01%
+
+--- Hedef Değişken: 10-min mean wind direction ---
+  Model eğitiliyor: Random Forest
+    Val: MAE=0.0004, RMSE=0.0183, R2=0.9999999646025075
+    Test: MAE=0.0002, RMSE=0.0236, R2=0.9999999416701866, MAPE=0.00%
+
+Senaryo 2 tamamlandı.
